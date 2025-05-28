@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Welcome | Home{% endblock %}
+{% block body%}
+
+
+<div class="container my-5">
+    {% if msg %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>{{msg}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {%  endif %}
+
+    <h1 style="text-align: center;">Otp Verification!</h1>
+    <hr>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+        <label for="Otp" class="form-label">Enter Your Otp</label>
+        <input type="otp" class="form-control" name="otp" id="otp" aria-describedby="emailHelp">
+        </div>
+        <button type="submit" class="btn btn-danger">Verify</button>
+    </form>
+</div>
+
+{% endblock %}

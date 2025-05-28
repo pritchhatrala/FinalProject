@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin | All User Info</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen p-6">
+    <div class="max-w-7xl mx-auto bg-white shadow-md rounded-xl p-6">
+        <h1 class="text-2xl font-bold text-gray-800 mb-6 text-center">All Users Notes Data</h1>
+
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-300">
+                <thead class="bg-indigo-600 text-white">
+                    <tr>
+                        <th class="px-4 py-2 text-left text-sm font-semibold">ID</th>
+                        <th class="px-4 py-2 text-left text-sm font-semibold">Submitted At</th>
+                        <th class="px-4 py-2 text-left text-sm font-semibold">Title</th>
+                        <th class="px-4 py-2 text-left text-sm font-semibold">Category</th>
+                        <th class="px-4 py-2 text-left text-sm font-semibold">Notes</th>
+                        <th class="px-4 py-2 text-left text-sm font-semibold">Descriptions</th>
+                        <th class="px-4 py-2 text-left text-sm font-semibold">Status</th>
+                        <th class="px-4 py-2 text-left text-sm font-semibold">User</th>
+                        <th class="px-4 py-2 text-left text-sm font-semibold">Updated At</th>
+                        <th class="px-4 py-2 text-left text-sm font-semibold">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                    {% for i in notesinfo %}
+                    <tr class="hover:bg-gray-100 transition">
+                        <td class="px-4 py-2 text-sm text-gray-700">{{ i.id }}</td>
+                        <td class="px-4 py-2 text-sm text-gray-700">{{ i.submitted_at }}</td>
+                        <td class="px-4 py-2 text-sm text-gray-700">{{ i.title }}</td>
+                        <td class="px-4 py-2 text-sm text-gray-700">{{ i.cate }}</td>
+                        <td class="px-4 py-2 text-sm">
+                            <a href="{{ i.notefile.url }}" class="text-indigo-600 font-semibold hover:underline">
+                                📄 View Notes
+                            </a>
+                        </td>
+                        <td class="px-4 py-2 text-sm text-gray-700">{{ i.desc }}</td>
+                        <td class="px-4 py-2 text-sm">
+                            {% if i.status == 'Pending' %}
+                            <span
+                                class="inline-block px-3 py-1 text-xs font-semibold bg-yellow-100 text-yellow-800 rounded-full">
+                                Pending
+                            </span>
+                            {% elif i.status == 'Approved' %}
+                            <span
+                                class="inline-block px-3 py-1 text-xs font-semibold bg-green-100 text-green-800 rounded-full">
+                                Approved
+                            </span>
+                            {% elif i.status == 'Rejected' %}
+                            <span
+                                class="inline-block px-3 py-1 text-xs font-semibold bg-red-100 text-red-800 rounded-full">
+                                Rejected
+                            </span>
+                            {% else %}
+                            <span
+                                class="inline-block px-3 py-1 text-xs font-semibold bg-gray-100 text-gray-700 rounded-full">
+                                {{ i.status }}
+                            </span>
+                            {% endif %}
+                        </td>
+                        <td class="px-4 py-2 text-sm text-gray-700">{{ i.username.username }}</td>
+                        <td class="px-4 py-2 text-sm text-gray-700">{{ i.updated_at }}</td>
+                        <td class="px-4 py-2 text-sm">
+                            <div class="flex space-x-3">
+                                {% if i.status == 'Pending' %}
+                                    <a href="/adminapp/notes_approve/{{i.id}}"
+                                    class="text-green-600 hover:text-green-800 font-medium underline hover:underline-offset-2 transition duration-200">
+                                    ✅ Approve
+                                    </a>
+                                    <a href="/adminapp/notes_reject/{{i.id}}"
+                                    class="text-red-600 hover:text-red-800 font-medium underline hover:underline-offset-2 transition duration-200">
+                                    ❌ Reject
+                                    </a>
+                                {% elif i.status == 'Approved' %}
+                                    <a href="/adminapp/notes_reject/{{ i.id }}"
+                                        class="text-red-600 hover:text-red-800 font-medium underline hover:underline-offset-2 transition duration-200">
+                                        ❌ Reject
+                                    </a>
+                                {% elif i.status == 'Rejected' %}
+                                    <a href="/adminapp/notes_approve/{{ i.id }}"
+                                        class="text-green-600 hover:text-green-800 font-medium underline hover:underline-offset-2 transition duration-200">
+                                        ✅ Approve
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>

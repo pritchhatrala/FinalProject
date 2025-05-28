@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}Notes{% endblock %}
+
+{% block body%}
+<div class="container my-5">
+    <h1 style="text-align: center;">Note Submission</h1>
+    <hr>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Query Title</label>
+            <input type="text" name="title" class="form-control" id="exampleFormControlInput1">
+        </div>
+        <select class="form-select form-select-lg mb-3" name="cate" aria-label="Large select example">
+            <option selected>Select your category</option>
+            <option>Core Python</option>
+            <option>Advance Python</option>
+            <option>Python Framework</option>
+            <option>Other</option>
+        </select>
+        <div class="mb-3">
+            <label for="formFile" class="form-label">Upload your SS / File's</label>
+            <input class="form-control" name="notefile" type="file" id="formFile">
+        </div>
+        <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Description</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" name="desc" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-dark btn-lg">Submit Notes</button>
+    </form>
+</div>
+{% endblock%}
